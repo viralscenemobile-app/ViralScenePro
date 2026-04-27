@@ -20,6 +20,10 @@ html, body {
   color: white;
   font-family: var(--font-sans);
   overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: 14px; /* Reduced from default 16px to make everything 12.5% smaller and denser */
 }
 
 #root {

@@ -9,11 +9,11 @@ interface SidebarProps {
 
 export default function Sidebar({ activeTab, tabs, onChange }: SidebarProps) {
   return (
-    <div className="flex flex-col h-full bg-panel p-4 pt-8">
-      <div className="font-sans font-bold text-2xl text-accent mb-12 px-4 tracking-tighter">
+    <div className="flex flex-col h-full bg-base p-4 pt-6">
+      <div className="font-sans font-bold text-xl text-accent mb-10 px-3 tracking-tighter">
         VIRAL SCENE
       </div>
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-1.5">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -21,12 +21,13 @@ export default function Sidebar({ activeTab, tabs, onChange }: SidebarProps) {
             <button
               key={tab.id}
               onClick={() => onChange(tab.id)}
-              className={`flex items-center gap-4 px-4 py-3 rounded-2xl transition-all font-sans ${
-                isActive ? 'bg-white/10 text-white shadow-sm' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+              className={`flex items-center gap-3 px-4 py-3 rounded-full transition-all font-sans relative group ${
+                isActive ? 'bg-accent/10 text-accent shadow-sm' : 'text-gray-400 hover:bg-white/5 hover:text-white'
               }`}
             >
-              <Icon className="w-6 h-6" strokeWidth={isActive ? 2.5 : 2} />
-              <span className={`text-lg font-medium ${isActive ? 'font-semibold' : ''}`}>
+              {isActive && <div className="absolute left-1.5 w-1 h-4 bg-accent rounded-full" />}
+              <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
+              <span className={`text-md font-medium ${isActive ? 'font-bold' : ''}`}>
                 {tab.label}
               </span>
             </button>
@@ -36,13 +37,13 @@ export default function Sidebar({ activeTab, tabs, onChange }: SidebarProps) {
       
       <div className="mt-auto">
         {/* Credits or profile snippet */}
-        <div className="p-4 bg-black/40 rounded-2xl flex items-center justify-between border border-border backdrop-blur-sm">
-          <div className="flex flex-col items-start">
-            <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Credits</span>
-            <span className="text-xl font-sans font-bold text-accent shadow-sm">500</span>
+        <div className="p-4 bg-white/[0.03] rounded-3xl flex items-center justify-between border border-white/5 backdrop-blur-xl shadow-2xl">
+          <div className="flex flex-col items-start px-1">
+            <span className="text-[10px] text-gray-500 uppercase font-bold tracking-widest leading-none mb-1">Credits</span>
+            <span className="text-xl font-sans font-bold text-accent shadow-sm leading-none">500</span>
           </div>
-          <button className="bg-accent text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] text-sm font-bold px-4 py-1.5 rounded-full hover:bg-accent-hover active:scale-95 transition-all">
-            Get
+          <button className="bg-accent text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] text-[10px] font-bold px-4 py-2 rounded-full hover:bg-accent-hover active:scale-95 transition-all uppercase tracking-widest">
+            Top up
           </button>
         </div>
       </div>
