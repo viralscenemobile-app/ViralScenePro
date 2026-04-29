@@ -8,7 +8,7 @@ interface BottomNavProps {
 
 export default function BottomNav({ activeTab, tabs, onChange }: BottomNavProps) {
   return (
-    <div className="h-16 pb-1 bg-black/80 backdrop-blur-3xl border-t border-border flex items-center justify-around px-1 z-50 rounded-t-[2rem]">
+    <div className="h-16 pb-1 bg-black flex items-center justify-around px-1 z-50 rounded-t-[2rem]">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         const isCreate = tab.id === 'create';
@@ -25,7 +25,7 @@ export default function BottomNav({ activeTab, tabs, onChange }: BottomNavProps)
             }`}
           >
             {isCreate ? (
-              <div className="bg-white text-black p-2.5 rounded-full shadow-lg scale-110">
+              <div className="bg-[#2e1065] text-white p-2.5 rounded-full shadow-lg scale-110">
                 <Icon className="w-6 h-6" strokeWidth={2.5} />
               </div>
             ) : (

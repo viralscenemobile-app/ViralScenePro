@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Home, Compass, PlusCircle, Library, User } from 'lucide-react';
+import { useQuery } from 'convex/react';
+import { api } from '../../convex/_generated/api';
+import { AuthContext } from '../AuthProvider';
 
 interface SidebarProps {
   activeTab: string;
@@ -8,8 +11,16 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ activeTab, tabs, onChange }: SidebarProps) {
+  const { convexUserId } = useContext(AuthContext);
+  const user = useQuery(
+    api.users.getUser,
+    convexUserId ? { userId: convexUserId as any } : "skip"
+  );
+
+  const credits = user?.credits ?? 0;
+
   return (
-    <div className="flex flex-col h-full bg-base p-4 pt-6">
+    <div className="flex flex-col h-full bg-black p-4 pt-6">
       <div className="font-sans font-bold text-xl text-accent mb-10 px-3 tracking-tighter">
         VIRAL SCENE
       </div>
@@ -21,11 +32,10 @@ export default function Sidebar({ activeTab, tabs, onChange }: SidebarProps) {
             <button
               key={tab.id}
               onClick={() => onChange(tab.id)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-full transition-all font-sans relative group ${
-                isActive ? 'bg-accent/10 text-accent shadow-sm' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+              className={`flex items-center gap-3 px-4 py-3 rounded-full transition-all font-sans ${
+                isActive ? 'bg-black text-white' : 'text-gray-400 hover:bg-black hover:text-white'
               }`}
             >
-              {isActive && <div className="absolute left-1.5 w-1 h-4 bg-accent rounded-full" />}
               <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
               <span className={`text-md font-medium ${isActive ? 'font-bold' : ''}`}>
                 {tab.label}
@@ -37,12 +47,12 @@ export default function Sidebar({ activeTab, tabs, onChange }: SidebarProps) {
       
       <div className="mt-auto">
         {/* Credits or profile snippet */}
-        <div className="p-4 bg-white/[0.03] rounded-3xl flex items-center justify-between border border-white/5 backdrop-blur-xl shadow-2xl">
+        <div className="p-4 bg-black rounded-3xl flex items-center justify-between shadow-lg">
           <div className="flex flex-col items-start px-1">
             <span className="text-[10px] text-gray-500 uppercase font-bold tracking-widest leading-none mb-1">Credits</span>
-            <span className="text-xl font-sans font-bold text-accent shadow-sm leading-none">500</span>
+            <span className="text-xl font-sans font-bold text-accent shadow-sm leading-none">{credits}</span>
           </div>
-          <button className="bg-accent text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] text-[10px] font-bold px-4 py-2 rounded-full hover:bg-accent-hover active:scale-95 transition-all uppercase tracking-widest">
+          <button onClick={() => onChange('profile')} className="bg-[#2e1065] text-white text-[10px] font-bold px-4 py-2 rounded-full hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest border border-accent">
             Top up
           </button>
         </div>
